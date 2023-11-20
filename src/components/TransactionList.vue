@@ -8,17 +8,11 @@
   </ul>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      transactions: [
-        { id: 1, text: 'Paycheck', amount: 221.99 },
-        { id: 2, text: 'Sell Car', amount: 114.67 },
-        { id: 3, text: 'Stereo set', amount: -604 },
-        { id: 4, text: 'Book', amount: -16 },
-      ],
-    }
-  },
-}
+<script setup>
+const transactions = [
+  { id: 1, text: 'Paycheck', amount: 221.99 },
+  { id: 2, text: 'Sell Car', amount: 114.67 },
+  { id: 3, text: 'Stereo set', amount: -604 },
+  { id: 4, text: 'Book', amount: -16 },
+]
 </script>
