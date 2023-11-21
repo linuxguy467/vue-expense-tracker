@@ -3,14 +3,21 @@
   <form id="form" @submit.prevent="onSubmit">
     <div class="form-control">
       <label for="text">Text</label>
-      <input type="text" id="text" v-model="text" placeholder="Enter text..." @blur="sanitizeInput" />
+      <input type="text" id="text" v-model="text" placeholder="Enter text..." @blur="($event) => (text = DOMPurify.sanitize($event.target.value))" />
     </div>
     <div class="form-control">
       <label for="amount">
         Amount <br />
         (negative - expense, positive - income)
       </label>
-      <input type="number" step="0.01" v-model="amount" id="amount" placeholder="Enter amount..." @blur="sanitizeInput" />
+      <input
+        type="number"
+        step="0.01"
+        v-model="amount"
+        id="amount"
+        placeholder="Enter amount..."
+        @blur="($event) => (amount = DOMPurify.sanitize($event.target.value))"
+      />
     </div>
     <button class="btn">Add transaction</button>
   </form>
@@ -29,10 +36,6 @@ const emit = defineEmits(['transactionSubmitted'])
 
 const toast = useToast()
 
-const sanitizeInput = (event) => {
-  text.value = DOMPurify.sanitize(event.target.value)
-}
-
 const onSubmit = () => {
   if (!text.value || !amount.value) {
     toast.error('Both fields must be filled')
@@ -44,9 +47,9 @@ const onSubmit = () => {
     amount: parseFloat(amount.value),
   }
 
-  emit('transactionSubmitted', transactionData)
-
   text.value = ''
   amount.value = ''
+
+  emit('transactionSubmitted', transactionData)
 }
 </script>
