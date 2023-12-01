@@ -1,11 +1,11 @@
 <template>
   <Header />
-  <div class="container">
+  <main class="container">
     <Balance :total="+total" />
     <IncomeExpenses :income="+income" :expenses="+expenses" />
     <TransactionList :transactions="transactions" @transactionDeleted="handleTransactionDeleted" />
     <AddTransaction @transactionSubmitted="handleTransactionSubmitted" />
-  </div>
+  </main>
 </template>
 
 <script setup>
@@ -17,7 +17,9 @@ import AddTransaction from './components/AddTransaction.vue'
 
 import { useToast } from 'vue-toastification'
 
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, provide } from 'vue'
+import { saveAs } from 'file-saver'
+import { Parser } from '@json2csv/plainjs'
 
 onMounted(() => {
   const savedTransactions = JSON.parse(localStorage.getItem('transactions'))
@@ -87,4 +89,28 @@ const handleTransactionDeleted = (id) => {
 const saveTransactionsToLocalStorage = () => {
   localStorage.setItem('transactions', JSON.stringify(transactions.value))
 }
+
+// Export To CSV
+const exportToCsv = () => {
+  const trans = transactions.value.map(({ text, amount }) => {
+    return {
+      Text: text,
+      Amount: amount,
+    }
+  })
+
+  const totalIncome = { 'Total Income': +income.value.toFixed(2) }
+  const totalExpense = { 'Total Expenses': +expenses.value.toFixed(2) }
+  const balanceData = { Balance: +total.value.toFixed(2) }
+
+  const transactionData = [...trans, totalIncome, totalExpense, balanceData]
+
+  const transactionsParser = new Parser()
+  const transactionCsv = transactionsParser.parse(transactionData)
+
+  const csvBlob = new Blob([transactionCsv], { type: 'text/csv;charset=utf-8;' })
+  saveAs(csvBlob, 'transactions.csv')
+}
+
+provide('exportToCsv', exportToCsv)
 </script>

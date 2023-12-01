@@ -8,7 +8,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/vue-fontawesome": "^3.0.5",
+    "@json2csv/plainjs": "^7.0.4",
     "dompurify": "^3.0.6",
+    "file-saver": "^2.0.5",
     "vue": "^3.3.4",
     "vue-toastification": "^2.0.0-rc.5"
   },

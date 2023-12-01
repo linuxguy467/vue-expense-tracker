@@ -19,7 +19,7 @@
         @blur="($event) => (amount = DOMPurify.sanitize($event.target.value))"
       />
     </div>
-    <button class="btn">Add transaction</button>
+    <button class="btn" v-text="'Add transaction'"></button>
   </form>
 </template>
 

@@ -41,6 +41,17 @@ h4 {
   text-transform: uppercase;
 }
 
+.balance-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.balance-container > div {
+  flex: 1;
+  text-align: left;
+}
+
 .inc-exp-container {
   background-color: #fff;
   box-shadow: var(--box-shadow);
@@ -99,6 +110,12 @@ input[type='number'] {
   margin: 10px 0 30px;
   padding: 10px;
   width: 100%;
+}
+
+#exportBtn {
+  background-color: #2ac069;
+  width: 12%;
+  margin: 10px 0 5px;
 }
 
 .btn:focus,
